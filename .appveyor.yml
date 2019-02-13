@@ -1,0 +1,21 @@
+version: '{build}'
+
+image:
+  - Ubuntu1604
+  - Ubuntu1804
+
+platform:
+  - x86
+  - x64
+
+install:
+  - sh: |
+      sudo apt-get -qq update
+      sudo apt-get -qq install cmake build-essential ninja-build libopenexr-dev extra-cmake-modules
+
+build_script:
+  - sh: |
+      cmake -H. -Bbuild -G Ninja
+      cmake --build build
+
+test: off
