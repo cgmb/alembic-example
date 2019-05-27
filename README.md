@@ -19,11 +19,14 @@ previous frame.
 
 ## Working with Alembic files
 
-The output file is `out.abc`. The example animation in `frames/` is very
-low-resolution, but still looks pretty good when filtered and rendered in
-Blender. Note that the version of Blender distributed by apt on Ubuntu 18.04
-does not support Alembic. Use the official binary release from [blender.org][3]
-to import Alembic files.
+The output file is `out.abc`. Note that the version of Blender distributed by
+apt on Ubuntu 18.04 does not support Alembic. Use the official binary release
+from [blender.org][3] to import Alembic files.
+
+## Example Animation
+
+The example animation in `frames/` is very low-resolution, but still looks
+pretty good when filtered and rendered in Blender.
 
 ![Rendered example animation of a droplet spreading.][4]
 
