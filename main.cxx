@@ -185,7 +185,7 @@ bool is_mul_safe(size_t x, size_t y) {
 }
 
 bool ply_idx_ok(uint32_t index, size_t vertex_count) {
-  return size_t(index) < vertex_count;
+  return index < uint32_t(INT32_MAX) && size_t(index) < vertex_count;
 }
 
 Mesh load_ply(const char* filename) {
