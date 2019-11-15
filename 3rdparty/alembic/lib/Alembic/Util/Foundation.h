@@ -102,7 +102,7 @@
 #include <algorithm>
 
 #ifndef ALEMBIC_VERSION_NS
-#define ALEMBIC_VERSION_NS v11
+#define ALEMBIC_VERSION_NS v12
 #endif
 
 namespace Alembic {
@@ -221,26 +221,26 @@ class mutex : noncopyable
 public:
     mutex()
     {
-        m = CreateMutex( NULL, FALSE, NULL );
+         InitializeCriticalSection(&cs);
     }
 
     ~mutex()
     {
-        CloseHandle( m );
+        DeleteCriticalSection(&cs);
     }
 
     void lock()
     {
-        WaitForSingleObject( m, INFINITE );
+        EnterCriticalSection(&cs);
     }
 
     void unlock()
     {
-        ReleaseMutex( m );
+        LeaveCriticalSection(&cs);
     }
 
 private:
-    HANDLE m;
+    CRITICAL_SECTION cs;
 };
 
 #else

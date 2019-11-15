@@ -1699,7 +1699,7 @@ bool isPerParticleAttributes( const MFnDependencyNode &iNode, MObject attrObj )
 {
     MStatus status(MS::kSuccess);
 
-    if ( !iNode.hasObj(MFn::kParticle))
+    if ( !iNode.object().hasFn(MFn::kParticle))
     {
         return false;
     }
@@ -1814,7 +1814,7 @@ AttributesWriter::AttributesWriter(
 
         // When someone set user attribute on a particleShape, we want to write it to arbGeom
         // This enable the attribute to be correctly considered as point cloud data
-        if (userAttr && iNode.hasObj(MFn::kParticle))
+        if (userAttr && isPerParticle)
         {
             // The code will continue with the current attribute,  but will write it to arbGeom
             userAttr = false;
@@ -2177,7 +2177,7 @@ bool AttributesWriter::hasAnyAttr(const MFnDependencyNode & iNode,
 
     std::vector< PlugAndObjArray > staticPlugObjArrayVec;
 
-    if (iNode.hasObj(MFn::kParticle))
+    if (iNode.object().hasFn(MFn::kParticle))
     {
         // Particles always have extra attributes
         return true;
