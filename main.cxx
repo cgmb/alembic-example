@@ -96,6 +96,7 @@ struct AlembicExportParameters {
   std::string application_name;
   std::string scene_description;
   std::string object_name;
+  double fps;
 };
 
 void set_property(AAG::OPolyMeshSchema& schema, const char* name, bool value) {
@@ -109,13 +110,14 @@ void export_to_alembic(std::ostream& out,
   AA::MetaData meta;
   meta.set(AA::kApplicationNameKey, params.application_name);
   meta.set(AA::kUserDescriptionKey, params.scene_description);
+  meta.set(AA::kDCCFPSKey, std::to_string(params.fps));
 
   Alembic::AbcCoreOgawa::WriteArchive writer;
   AA::OArchive archive(writer(&out, meta), AA::ErrorHandler::kThrowPolicy);
 
   uint32_t time_sampling_idx;
   { // 'uniform' time sampling
-    AA::chrono_t time_per_cycle = 1.0 / 24.0;
+    AA::chrono_t time_per_cycle = 1.0 / params.fps;
     AA::chrono_t start_time = 0.0;
     time_sampling_idx = archive.addTimeSampling(AA::TimeSampling(time_per_cycle, start_time));
   }
@@ -142,6 +144,7 @@ int main(int argc, const char** argv) {
   parameters.application_name = "AlEx";
   parameters.scene_description = "An example mesh animation for Blender.";
   parameters.object_name = "exobj";
+  parameters.fps = 24.0;
 
   std::ofstream out("out.abc", std::ios::binary);
   std::vector<Mesh> meshes;
